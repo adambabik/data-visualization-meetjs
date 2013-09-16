@@ -3,24 +3,22 @@
 
   var reposData = null;
 
-  function key(d) {
-    return d.lang;
-  }
+  function key(d) { return d.lang; }
+
+  function val(d) { return d.repos; }
+
+  var numFormat = d3.format(',d');
 
   // UI
   //
 
   d3.selectAll('.sort-by button').on('click', function () {
-    d3.event
-      .currentTarget
-      .parentNode
+    this.parentNode
       .querySelector('.btn-primary')
       .classList
       .remove('btn-primary');
 
-    d3.event
-      .currentTarget
-      .classList.add('btn-primary');
+    this.classList.add('btn-primary');
 
     sort(this.dataset.type);
   });
@@ -28,27 +26,26 @@
   // Chart
   //
 
-  var width = 940,
-    height = 500,
-    margin = { top: 40, left: 10, right: 60, bottom: 80 };
+  var width = 960,
+      height = 540,
+      margin = { top: 40, left: 10, right: 65, bottom: 80 };
 
   var x = d3.scale.ordinal()
-    .rangeRoundBands([0, width - margin.left - margin.right], .2, 0);
+    .rangeRoundBands([0, width - margin.left - margin.right], .4, .15);
 
   var y = d3.scale.linear()
     .range([height - margin.bottom, 0]);
 
   var xAxis = d3.svg.axis()
     .scale(x)
-    .tickSize(10)
+    .tickSize(12)
     .outerTickSize(0)
     .orient('bottom');
 
   var yAxis = d3.svg.axis()
     .scale(y)
-    .outerTickSize(0)
     .tickSize(width - margin.left - margin.right, 0, 0)
-    .tickFormat(d3.format('d'))
+    .tickFormat(numFormat)
     .orient('right');
 
   function drawXAxis(call) {
@@ -78,12 +75,12 @@
     .append('g')
     .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
-  // put on the foreground
   var chart = svg.append('g').attr('class', 'chart');
+  var labels = svg.append('g').attr('class', 'labels');
 
   function redraw() {
-    x.domain(reposData.map(function (d) { return d.lang; }));
-    y.domain([0, d3.max(reposData, function (d) { return d.repos; })]);
+    x.domain(reposData.map(key));
+    y.domain([0, d3.max(reposData, val)]);
 
     svg.select('.x.axis').remove();
     drawXAxis(true);
@@ -91,11 +88,11 @@
     svg.select('.y.axis').remove();
     drawYAxis(true);
 
-    var newChart = chart
+    var bars = chart
       .selectAll('.bar')
-      .data(reposData, function (d) { return d.lang; });
+      .data(reposData, key);
 
-    newChart
+    bars
       .enter()
       .append('rect')
       .attr('class', 'bar')
@@ -104,16 +101,35 @@
       .attr('width', x.rangeBand())
       .attr('height', function (d) { return height - margin.bottom - y(d.repos); });
 
-    newChart
+    bars
       .transition()
       .duration(1000)
       .attr('x', function (d) { return x(d.lang); })
       .attr('y', function (d) { return y(d.repos); })
       .attr('height', function (d) { return height - margin.bottom - y(d.repos); });
 
-    newChart
+    bars
       .exit()
       .remove();
+
+    var texts = labels.selectAll('text').data(reposData, key);
+
+    texts
+      .enter()
+      .append('text')
+      .attr('x', function (d) { return x(d.lang) + x.rangeBand() / 2; })
+      .attr('y', function (d) { return y(d.repos); })
+      .attr('dy', '-.55em')
+      .attr('text-anchor', 'middle')
+      .text(function (d) { return numFormat(val(d)); });
+
+    texts
+      .transition()
+      .duration(1000)
+      .attr('x', function (d) { return x(d.lang) + x.rangeBand() / 2; })
+      .attr('y', function (d) { return y(d.repos); });
+
+    texts.exit().remove();
   }
 
   function sort(type) {
@@ -146,9 +162,7 @@
     data.forEach(function (d) {
       d.repos = +d.repos;
     });
-
-    // cache data
-    reposData = data.slice(0, 20);
+    reposData = data.slice(0, 10);
 
     redraw();
   });
