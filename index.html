@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Top GitHub languages in 2013</title>
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+  <style type="text/css">
+    .graph {
+      margin: 40px 0;
+    }
+    .form-group label {
+      font-weight: normal;
+      padding-right: 10px;
+    }
+    input[type="range"] {
+      vertical-align: middle;
+    }
+    .bar rect {
+      fill: orange;
+      color: white;
+    }
+    .bar text {
+      font-size: 14px;
+      font-weight: bold;
+    }
+    .axis path,
+    .axis line {
+      fill: none;
+      stroke: #ccc;
+      shape-rendering: crispEdges;
+    }
+    .axis.x {
+      font-size: 12px;
+    }
+    .axis.y {
+      font-size: 14px;
+    }
+    .axis.y .domain {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Top GitHub languages in 2013</h1>
+    </header>
+    <div class="area"></div>
+    <form class="row">
+      <div class="col-md-6">
+        <div class="form-group sort-by">
+          <label for="sortBy">Sort by:</label>
+          <button type="button" class="btn btn-sm btn-default btn-primary" data-type="NUM">Number of repos</button>
+          <button type="button" class="btn btn-sm btn-default" data-type="LEX">Lexically</button>
+          <button type="button" class="btn btn-sm btn-default" data-type="RAN">Random</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <script type="text/javascript" src="lib/d3.js"></script>
+  <script type="text/javascript" src="js/script.js"></script>
+</body>
+</html>
