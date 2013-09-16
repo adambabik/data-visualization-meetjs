@@ -10,9 +10,7 @@
   // UI
   //
 
-  // d3.js like jQuery!
   d3.selectAll('.sort-by button').on('click', function () {
-    // event is under d3.event
     d3.event
       .currentTarget
       .parentNode
@@ -23,6 +21,7 @@
     d3.event
       .currentTarget
       .classList.add('btn-primary');
+
     sort(this.dataset.type);
   });
 
@@ -31,10 +30,10 @@
 
   var width = 940,
     height = 500,
-    margin = { top: 40, left: 0, right: 60, bottom: 80 };
+    margin = { top: 40, left: 10, right: 60, bottom: 80 };
 
   var x = d3.scale.ordinal()
-    .rangeRoundBands([0, width - margin.left - margin.right], 0.2, 0);
+    .rangeRoundBands([0, width - margin.left - margin.right], .2, 0);
 
   var y = d3.scale.linear()
     .range([height - margin.bottom, 0]);
@@ -49,7 +48,7 @@
     .scale(y)
     .outerTickSize(0)
     .tickSize(width - margin.left - margin.right, 0, 0)
-    .tickFormat(d3.format('f'))
+    .tickFormat(d3.format('d'))
     .orient('right');
 
   function drawXAxis(call) {
@@ -96,32 +95,20 @@
       .selectAll('.bar')
       .data(reposData, function (d) { return d.lang; });
 
-    var bar = newChart
+    newChart
       .enter()
-      .append('g')
-      .attr('class', 'bar')
-      .attr('transform', function (d) {
-        return 'translate(' + x(d.lang) + ',' + y(d.repos) + ')';
-      });
-
-    bar
       .append('rect')
+      .attr('class', 'bar')
+      .attr('x', function (d) { return x(d.lang); })
+      .attr('y', function (d) { return y(d.repos); })
       .attr('width', x.rangeBand())
       .attr('height', function (d) { return height - margin.bottom - y(d.repos); });
-
-    bar
-      .append('text')
-      .attr('y', -5)
-      .text(function (d) {
-        return d.repos;
-      });
 
     newChart
       .transition()
       .duration(1000)
-      .attr('transform', function (d) {
-        return 'translate(' + x(d.lang) + ',' + y(d.repos) + ')';
-      })
+      .attr('x', function (d) { return x(d.lang); })
+      .attr('y', function (d) { return y(d.repos); })
       .attr('height', function (d) { return height - margin.bottom - y(d.repos); });
 
     newChart
@@ -161,7 +148,7 @@
     });
 
     // cache data
-    reposData = data.slice(0, 15);
+    reposData = data.slice(0, 20);
 
     redraw();
   });
