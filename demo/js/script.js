@@ -39,6 +39,49 @@
     .append('g')
     .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
+  var chart = svg.append('g')
+    .attr('class', 'chart');
+
+  function redraw() {
+    x.domain(reposData.map(key));
+    y.domain([0, d3.max(reposData, val)]);
+
+    var bars = chart
+      .selectAll('.bar')
+      .data(reposData, key);
+
+    bars
+      .enter()
+      .append('rect')
+      .attr('class', 'bar')
+      .attr('x', function (d) { return x(d.lang); })
+      .attr('y', function (d) { return y(d.repos); })
+      .attr('width', x.rangeBand())
+      .attr('height', function (d) { return height - margin.bottom - y(d.repos); });
+
+    bars
+      .exit()
+      .remove();
+
+    bars
+      .transition()
+      .duration(1000)
+      .attr('x', function (d) { return x(d.lang); })
+      .attr('y', function (d) { return y(d.repos); })
+      .attr('width', x.rangeBand())
+      .attr('height', function (d) { return height - margin.bottom - y(d.repos); });
+
+    svg.selectAll('.x.axis')
+      .transition()
+      .duration(1000)
+      .call(xAxis);
+
+    svg.selectAll('.y.axis')
+      .transition()
+      .duration(1000)
+      .call(yAxis);
+  }
+
   d3.csv('data/data.csv', function (err, data) {
     if (err) {
       throw err;
@@ -49,20 +92,7 @@
     });
     reposData = data.slice(0, 10);
 
-    x.domain(reposData.map(key));
-    y.domain([0, d3.max(reposData, val)]);
-
-    svg.append('g')
-      .attr('class', 'chart')
-      .selectAll('.bar')
-      .data(reposData, key)
-      .enter()
-      .append('rect')
-      .attr('class', 'bar')
-      .attr('x', function (d) { return x(d.lang); })
-      .attr('y', function (d) { return y(d.repos); })
-      .attr('width', x.rangeBand())
-      .attr('height', function (d) { return height - margin.bottom - y(d.repos); });
+    redraw();
 
     svg.insert('g', '.chart')
       .attr('class', 'x axis')
@@ -72,6 +102,27 @@
     svg.insert('g', '.chart')
       .attr('class', 'y axis')
       .call(yAxis);
+
+    var tmp = [],
+      switcher = -1;
+
+    setInterval(function () {
+      reposData = d3.shuffle(reposData);
+
+      if (tmp.length === 5) {
+        switcher = 1;
+      } else if (tmp.length === 0) {
+        switcher = -1;
+      }
+
+      if (switcher === -1) {
+        tmp.push(reposData.pop());
+      } else {
+        reposData.push(tmp.pop());
+      }
+
+      redraw();
+    }, 2000);
   });
 
 }());
