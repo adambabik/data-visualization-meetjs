@@ -11,16 +11,6 @@
     .container svg {
       margin-bottom: 20px;
     }
-    .form-group label {
-      font-weight: normal;
-      padding-right: 10px;
-    }
-    footer {
-      text-align: center;
-      margin: 40px 0;
-      border-top: 1px solid #eee;
-      padding-top: 40px;
-    }
 
     .bar {
       fill: orange;
@@ -54,26 +44,7 @@
 </head>
 <body>
   <div class="container">
-    <header class="page-header">
-      <h1>Top 10 GitHub languages in 2013 <small>from 01-01 to 31-08</small></h1>
-    </header>
-
     <div class="area"></div>
-
-    <form class="row">
-      <div class="col-md-6">
-        <div class="form-group sort-by">
-          <label for="sortBy">Sort by:</label>
-          <button type="button" class="btn btn-sm btn-default btn-primary" data-type="NUM">Number of repos</button>
-          <button type="button" class="btn btn-sm btn-default" data-type="LEX">Lexically</button>
-          <button type="button" class="btn btn-sm btn-default" data-type="RAN">Random</button>
-        </div>
-      </div>
-    </form>
-
-    <footer>
-      Powered by <a href="https://github.com/mbostock/d3">d3.js</a>. Inspired by <a href="http://adambard.com/blog/top-github-languages-for-2013-so-far">Adam Bard</a>. Created by <a href="http://twitter.com/dreame4">Adam Babik</a>.
-    </footer>
   </div>
 
   <script type="text/javascript" src="lib/d3.js"></script>
