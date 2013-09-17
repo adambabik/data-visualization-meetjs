@@ -54,13 +54,13 @@
       .enter()
       .append('rect')
       .attr('class', 'bar')
-      .attr('x', function (d) { return x(d.lang); })
-      .attr('y', function (d) { return y(d.repos); })
-      .attr('width', x.rangeBand())
-      .attr('height', function (d) { return height - margin.bottom - y(d.repos); });
+      .attr('fill-opacity', 0);
 
     bars
       .exit()
+      .transition()
+      .duration(1000)
+      .attr('fill-opacity', 0)
       .remove();
 
     bars
@@ -69,7 +69,8 @@
       .attr('x', function (d) { return x(d.lang); })
       .attr('y', function (d) { return y(d.repos); })
       .attr('width', x.rangeBand())
-      .attr('height', function (d) { return height - margin.bottom - y(d.repos); });
+      .attr('height', function (d) { return height - margin.bottom - y(d.repos); })
+      .attr('fill-opacity', 1);
 
     svg.selectAll('.x.axis')
       .transition()
