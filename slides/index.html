@@ -1,0 +1,484 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+
+    <title>Visualizing real-time data with D3.js</title>
+
+    <meta name="description" content="Presentation for meet.js on September 18">
+    <meta name="author" content="Adam Babik">
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="stylesheet" href="css/reveal.min.css">
+    <link rel="stylesheet" href="css/theme/sky.css" id="theme">
+    <link rel="stylesheet" href="css/main.css" id="theme">
+
+    <!-- For syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+    <script>
+      document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <div class="reveal">
+
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class="slides">
+
+        <section>
+          <h2 style="font-weight: bold">Visualizing data<br>with D3.js</h2>
+          <h4>meet.js / Warsaw / September 18, 2013</h4>
+          <h4><a href="http://twitter.com/">@dreame4</a></h4>
+
+          <aside class="notes">
+            Hello everyone!<br>
+            Welcome on another meet.js, this time in Warsaw.<br>
+            My name is Adam and I'm going to talk about d3.js and data visualization.
+          </aside>
+        </section>
+
+        <section>
+          <section>
+            <h2>What is D3.js?</h2>
+            <p><q>JavaScript library for manipulating documents<br> based on data.</q></p>
+
+            <aside class="notes">
+              In one sentence it's a JavaScript library for manipulating documents based on data.<br>
+              Documents means here HTML websites.
+            </aside>
+          </section>
+
+          <section>
+            <h2>Thank you, Mike!</h2>
+            <p>
+              <img height="350" src="/resources/images/mikebostock.jpeg"><br>
+            </p>
+
+            <aside class="notes">
+              He and some other guys release D3.js in 2011. It's a successor to Provotis framework.
+            </aside>
+          </section>
+
+          <section>
+            <h2>Is it popular?</h2>
+            <p>Like a hell!</p>
+            <p><img class="mark" src="/resources/images/github-d3.jpg"></p>
+            <p><img src="/resources/images/github-backbone.jpg"></p>
+            <p><img src="/resources/images/github-angular.jpg"></p>
+          </section>
+
+          <section>
+            <h2>More precisely</h2>
+            <ul>
+              <li class="fragment">Provides utilities to transform data</li>
+              <li class="fragment">Maps data to DOM Elements = <strong>visualization</strong></li>
+              <li class="fragment">Provides a data-driven approach to manipulate DOM</li>
+            </ul>
+
+            <aside class="notes">
+              What actually D3.js does:<br>
+              many functions to load different types of data; utility functions to manipulate JS arrays and objects: transforming, nesting, mapping etc.;;<br>
+              convenient selecting operators like select, selectAll; binding data to elements;;<br>
+              changing data are reflected in DOM; convenient methods like enter, exit
+            </aside>
+          </section>
+
+          <section>
+            <h2>Awesomeness factors</h2>
+            <ul>
+              <li class="fragment">Built with <strong>Web Standards</strong> in mind</li>
+              <li class="fragment">High level of abstraction and rich chainable API</li>
+              <li class="fragment">Flexibility - HTML or SVG, charts or other custom graphs</li>
+              <li class="fragment">Lots of examples and good docs <a href="https://github.com/mbostock/d3/wiki">https://github.com/mbostock/d3/wiki</a></li>
+            </ul>
+            <aside class="notes">
+              no third-party libraries, W3C standards are enough;<br>
+              modern Web Standards means also that it does not support older browsers out of the box;<br>
+              some polyfills are available; who cares anymore?;;<br>
+              makes it easy to express ideas; provides rich and chainable API;;<br>
+              you can use the same functions to insert/remove/update HTML or SVG elements;<br>
+              draw simple bar charts or complicated node-link trees
+              </ul>
+            </aside>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h2>Examples</h2>
+
+            <aside class="notes">
+              Just screenshots. The Internet on conferences doesn't work too well.
+            </aside>
+          </section>
+          <section>
+            <h2>Node-Link Tree</h2>
+            <img src="/resources/examples/Node-Link Tree fragment.jpg" height="700">
+          </section>
+
+          <section>
+            <h2>Circle Packing</h2>
+            <img src="/resources/examples/Circle Packing.jpg" height="700">
+
+            <aside class="notes">
+              Built-in support for this kind of stuff. About 40 lines of JS code.
+            </aside>
+          </section>
+
+          <section>
+            <h2>Maps <small>with external plugins</small></h2>
+            <img src="/resources/examples/Maps.jpg" height="700">
+          </section>
+
+          <section>
+            <h2>Maps + Charts</h2>
+            <img src="/resources/examples/Life Expectancy.jpg" height="500">
+
+            <aside class="notes">
+              shows life expectancy in countries around the world
+            </aside>
+          </section>
+
+          <section>
+            <h2>More</h2>
+
+            <ul>
+              <li><a href="http://bl.ocks.org/mbostock">bl.ocks.org/mbostock</a></li>
+              <li><a href="https://github.com/mbostock/d3/wiki/Gallery">d3.js gallery</a></li>
+            </ul>
+          </section>
+        </section>
+
+        <section>
+          <h2>Top 10 GitHub languages in 2013</h2>
+          <p><a href="http://localhost:8181/" target="_blank">Open in a new window</a></p>
+
+          <aside class="notes">
+            Simple bar chart with sorting options that shows ten most popular languages on GitHub in 2013 so far. Measured by how many repos was created in a given programming language. Adam Bard described on his blog how he got the data.<br>
+            Let's go through the code and see how it works.
+          </aside>
+        </section>
+
+        <section>
+          <section>
+            <h2>Beginnings</h2>
+
+            <ul>
+              <li>Take care of dimensions and margins from the beginning</li>
+              <li>Used to position chart in order to display axes, labels etc.</li>
+            </ul>
+
+            <pre><code data-trim contenteditable>
+var width = 940,
+    height = 500,
+    margin = { top: 40, left: 10, right: 65, bottom: 80 };
+            </code></pre>
+
+            <aside class="notes">
+              Actually it's sort of standard in d3.js to define width, height and margins. <br>
+              Take this stuff into consideration at the beginning as it makes life easier later when you'd like to crop chart to fit axes, labels etc.
+            </aside>
+          </section>
+
+          <section>
+            <h2>Loading data</h2>
+
+            <pre><code data-trim contenteditable>
+d3.csv('data/data.csv', function (err, data) {
+  // body
+});
+
+// data items structure
+{
+  lang: "JavaScript"
+  repos: "271662"
+}
+            </code></pre>
+
+            <aside class="notes">
+              Lots of functions to load data: text, json, html, xml, csv, tsv.
+              Node.js callback style.
+              data is parsed, usually an array while loading json or csv.
+              All values from CSV files are strings. Needs a conversion to numbers.
+            </aside>
+          </section>
+
+          <section>
+            <h2>Data mapping</h2>
+
+            <p>Domain -> Range</p>
+
+            <pre><code data-trim contenteditable>
+// linear scale, continuous input -> continuous output
+var y = d3.scale.linear()
+    .domain([0, d3.max(data, function (d) { return d.repos; })]);
+    .range([height - margin.bottom, 0]);
+            </code></pre>
+
+            <pre><code data-trim contenteditable>
+// ordinal scale, discrete domain -> n evenly-separated bands
+var x = d3.scale.ordinal()
+    .domain(data.map(function (d) { return d.key; }));
+    .rangeRoundBands([0, width - margin.left - margin.right], .4, .15);
+            </code></pre>
+
+            <aside class="notes">
+              Values can be arbitrarily large or small. Need to map them in order to display withing a rectangle that is 940 pixels wide and 500 pixels height.<br>
+              y and x are functions, takes argument from the input domain and returns corresponding value in the output range.<br>
+              y is linear, maps a continuous input to a continuous output.<br>
+              x is ordinal, takes discrete domain like set of names, returns n evenly-separated bands.<br>
+              Look at y range, as it goes from higher to lower value.
+            </aside>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h2>Drawing</h2>
+          </section>
+
+          <section>
+            <h2>SVG element</h2>
+
+            <pre><code data-trim contenteditable>
+// append svg element
+var svg = d3.select('body').append('svg')
+    .attr('width', width)
+    .attr('height', height)
+    .append('g')
+    .attr('class', 'chart')
+    .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>Bars</h2>
+
+            <pre><code data-trim contenteditable>
+svg
+  // select all .bar elements
+  .selectAll('.bar')
+  // bind data, passing key function
+  .data(data, function (d) { return d.lang; })
+  // get new data, that needs to be inserted
+  .enter()
+  // append rect element
+  // add class, x, y, width and height attributes
+  .append('rect')
+  .attr('class', 'bar')
+  .attr('x', function (d) { return x(d.lang); })
+  .attr('y', function (d) { return y(d.repos); })
+  .attr('width', x.rangeBand())
+  .attr('height', function (d) { return height - margin.bottom - y(d.repos); });
+            </code></pre>
+
+            <aside class="notes">
+              Firstly, we need to append SVG element and set its attributes. Keep in mind margins.<br>
+              Create .chart group. Later we'll add labels group.<br>
+              Draw bars as Rect SVG elements and add attributes.
+            </aside>
+          </section>
+
+          <section>
+            <h2>X Axis</h2>
+            <p>Should be drawn before chart in order to not cover it.
+
+            <pre><code data-trim contenteditable>
+// creates new axis generator
+// draws SVG elements
+var xAxis = d3.svg.axis()
+    .scale(x)
+    .tickSize(12)
+    .outerTickSize(0)
+    .orient('bottom');
+
+// insert g.x.axis element before .chart
+svg.insert('g', '.chart')
+  .attr('class', 'x axis')
+  .attr('transform', 'translate(0,' + (height - margin.bottom) + ')')
+  // apply axis to selection, actually draws the axis
+  .call(xAxis);
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>Y Axis</h2>
+
+            <pre><code data-trim contenteditable>
+// creates new axis generator
+// draws SVG elements
+var yAxis = d3.svg.axis()
+    .scale(y)
+    .tickSize(width - margin.left - margin.right, 0, 0)
+    .tickFormat(d3.format(',d'))
+    .orient('right');
+
+// insert g.y.axis element before .chart
+svg.insert('g', '.chart')
+  .attr('class', 'y axis')
+  .call(yAxis);
+            </code></pre>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h2>Transitions</h2>
+            <p>How can I know which elements should be added/updated/removed?</p>
+          </section>
+
+          <section>
+            <h2>enter()</h2>
+            <h2>exit()</h2>
+            <h2>transition()</h2>
+            <h3>to the rescue!</h3>
+          </section>
+
+          <section>
+            <h2>enter()</h2>
+            <ul>
+              <li>placeholder for each data elements for which there is no DOM element</li>
+              <li>defined after <code>data()</code> operator</li>
+              <li>used to <strong>add</strong> new elements</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2>exit()</h2>
+            <ul>
+              <li>existing DOM elements for which no data item was found</li>
+              <li>defined after <code>data()</code> operator</li>
+              <li>used to <strong>remove</strong> elements</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2>transition()</h2>
+            <ul>
+              <li>creates new transition - apply operators smoothly over time</li>
+              <li>used in conjunction with <code>enter()</code> and <code>remove()</code></li>
+            </ul>
+          </section>
+
+          <section>
+            <h2>Usage</h2>
+
+            <pre><code data-trim contenteditable>
+function redraw() {
+  // update domains
+  x.domain(data.map(function (d) { return d.lang; }));
+  y.domain([0, d3.max(data, function (d) { return d.repos; })]);
+
+  // redraw axes
+  ...
+
+  var bars = svg
+    .selectAll('.bar')
+    .data(data, function (d) { return d.lang; });
+
+  // to be continued
+}
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>Add new elements</h2>
+
+            <pre><code data-trim contenteditable>
+bars
+  .enter() // !!!
+  .append('rect')
+  .attr('class', 'bar')
+  .attr('x', function (d) { return x(d.lang); })
+  .attr('y', function (d) { return y(d.repos); })
+  .attr('width', x.rangeBand())
+  .attr('height', function (d) { return height - margin.bottom - y(d.repos); });
+            </code></pre>
+
+          </section>
+
+          <section>
+            <h2>Remove not existing elements</h2>
+            <pre><code data-trim contenteditable>
+bars
+  .exit() // !!!
+  .remove();
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>Update existing</h2>
+            <pre><code data-trim contenteditable>
+bars
+  .transition()
+  .duration(1000)
+  .attr('x', function (d) { return x(d.lang); })
+  .attr('y', function (d) { return y(d.repos); })
+  .attr('width', x.rangeBand())
+  .attr('height', function (d) { return height - margin.bottom - y(d.repos); });
+            </code></pre>
+          </section>
+        </section>
+
+        <section>
+          <h2>Thank you!</h2>
+          <br>
+          <h3>Slides and Code <small>soon</small></h3>
+          <p><a href="https://github.com/dreame4/data-visualization-meetjs">
+            github.com/dreame4/data-visualization-meetjs
+          </a><br><br></p>
+
+          <h3>Contact</h3>
+          <p><a href="http://twitter.com/dreame4">@dreame4</a><br><br></p>
+
+          <p><small><strong>meet.js Warsaw, September 18</strong></small></p>
+        </section>
+      </div>
+
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.min.js"></script>
+
+    <script>
+
+      // Full list of configuration options available here:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+        transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+          { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+          { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+          { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+          // { src: 'plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } }
+          // { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+        ]
+      });
+
+    </script>
+
+  </body>
+</html>

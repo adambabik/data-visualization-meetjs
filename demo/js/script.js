@@ -1,5 +1,5 @@
-//;(function () {
-//  'use strict';
+;(function () {
+ 'use strict';
 
   var reposData = null;
 
@@ -26,9 +26,9 @@
   // Chart
   //
 
-  var width = 960,
-      height = 540,
-      margin = { top: 40, left: 10, right: 65, bottom: 80 };
+  var width = 940,
+      height = 500,
+      margin = { top: 30, left: 10, right: 65, bottom: 70 };
 
   var x = d3.scale.ordinal()
     .rangeRoundBands([0, width - margin.left - margin.right], .4, .15);
@@ -102,15 +102,15 @@
       .attr('height', function (d) { return height - margin.bottom - y(d.repos); });
 
     bars
+      .exit()
+      .remove();
+
+    bars
       .transition()
       .duration(1000)
       .attr('x', function (d) { return x(d.lang); })
       .attr('y', function (d) { return y(d.repos); })
       .attr('height', function (d) { return height - margin.bottom - y(d.repos); });
-
-    bars
-      .exit()
-      .remove();
 
     var texts = labels.selectAll('text').data(reposData, key);
 
@@ -166,4 +166,5 @@
 
     redraw();
   });
-//}());
+
+}());
