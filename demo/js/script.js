@@ -1,10 +1,10 @@
 ;(function () {
  'use strict';
 
+  // cache data
   var reposData = null;
 
   function key(d) { return d.lang; }
-
   function val(d) { return d.repos; }
 
   var numFormat = d3.format(',d');
@@ -47,19 +47,6 @@
     .tickSize(width - margin.left - margin.right, 0, 0)
     .tickFormat(numFormat)
     .orient('right');
-
-  function drawXAxis(call) {
-
-  }
-
-  function drawYAxis(call) {
-    var g = svg.insert('g', '.chart')
-      .attr('class', 'y axis');
-
-    if (call) {
-      g.call(yAxis);
-    }
-  }
 
   var svg = d3.select('.area').append('svg')
     .attr('width', width)
