@@ -49,15 +49,7 @@
     .orient('right');
 
   function drawXAxis(call) {
-    var g = svg.insert('g', '.chart')
-      .attr('class', 'x axis')
-      .attr('transform', 'translate(0,' + (height - margin.bottom) + ')');
 
-    if (call) {
-      g.call(xAxis);
-      g.selectAll('text')
-        .attr('transform', 'rotate(20)');
-    }
   }
 
   function drawYAxis(call) {
@@ -82,11 +74,15 @@
     x.domain(reposData.map(key));
     y.domain([0, d3.max(reposData, val)]);
 
-    svg.select('.x.axis').remove();
-    drawXAxis(true);
+    svg.selectAll('.x.axis')
+      .transition()
+      .duration(1000)
+      .call(xAxis);
 
-    svg.select('.y.axis').remove();
-    drawYAxis(true);
+    svg.selectAll('.y.axis')
+      .transition()
+      .duration(1000)
+      .call(yAxis);
 
     var bars = chart
       .selectAll('.bar')
@@ -165,6 +161,18 @@
     reposData = data.slice(0, 10);
 
     redraw();
+
+    svg.insert('g', '.chart')
+      .attr('class', 'x axis')
+      .attr('transform', 'translate(0,' + (height - margin.bottom) + ')')
+      .call(xAxis)
+      .selectAll('text')
+      .attr('transform', 'rotate(20)');
+
+    svg.insert('g', '.chart')
+      .attr('class', 'y axis')
+      .call(yAxis);
+
   });
 
 }());
