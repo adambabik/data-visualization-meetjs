@@ -13,13 +13,25 @@
 
   var width = 940,
       height = 500,
-      margin = { top: 20, left: 0, right: 0, bottom: 0 };
+      margin = { top: 20, left: 0, right: 65, bottom: 60 };
 
   var x = d3.scale.ordinal()
     .rangeRoundBands([0, width - margin.left - margin.right], .4, .15);
 
   var y = d3.scale.linear()
     .range([height - margin.bottom, 0]);
+
+  var xAxis = d3.svg.axis()
+    .scale(x)
+    .tickSize(12)
+    .outerTickSize(0)
+    .orient('bottom');
+
+  var yAxis = d3.svg.axis()
+    .scale(y)
+    .tickSize(width - margin.left - margin.right, 0, 0)
+    .tickFormat(d3.format(',d'))
+    .orient('right');
 
   var svg = d3.select('.area').append('svg')
     .attr('width', width)
@@ -51,6 +63,15 @@
       .attr('y', function (d) { return y(d.repos); })
       .attr('width', x.rangeBand())
       .attr('height', function (d) { return height - margin.bottom - y(d.repos); });
+
+    svg.insert('g', '.chart')
+      .attr('class', 'x axis')
+      .attr('transform', 'translate(0,' + (height - margin.bottom) + ')')
+      .call(xAxis);
+
+    svg.insert('g', '.chart')
+      .attr('class', 'y axis')
+      .call(yAxis);
   });
 
 }());
