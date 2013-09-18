@@ -51,6 +51,17 @@
 
         <section>
           <section>
+            <h2>Agenda</h2>
+
+            <ol>
+              <li>A couple words about d3.js</li>
+              <li>Sample chart - code + demo</li>
+            </ol>
+          </section>
+        </section>
+
+        <section>
+          <section>
             <h2>What is D3.js?</h2>
             <p><q>JavaScript library for manipulating documents<br> based on data.</q></p>
 
@@ -381,7 +392,7 @@ function redraw() {
   x.domain(data.map(function (d) { return d.lang; }));
   y.domain([0, d3.max(data, function (d) { return d.repos; })]);
 
-  // redraw axes
+  // update axes
   ...
 
   var bars = svg
